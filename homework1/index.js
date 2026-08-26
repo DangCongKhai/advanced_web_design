@@ -10,6 +10,7 @@ function save() {
     }
     console.log(a);
     arr.push(a);
+    show();
 }
 
 function show() {
@@ -30,10 +31,16 @@ function show() {
     document.getElementById('tbl').innerHTML = html;
 }
 
-function reset() {
+function clear() {
     document.getElementById('name').value = '';
     document.getElementById('id').value = '';
     document.getElementById('prdname').value = '';
     document.getElementById('qty').value = '';
     document.getElementById('price').value = '';
+
+}
+
+function reset() {
+    arr = [];
+    clear();
 }
