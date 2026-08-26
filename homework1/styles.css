@@ -1,0 +1,54 @@
+
+body {
+    font-weight: bold;
+    padding: 20px;
+    color: #000;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.form-group input {
+    width: 300px;
+    padding: 5px;
+    border: 1px solid #999;
+    border-radius: 3px;
+}
+
+.actions {
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.actions button {
+    color: red;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px 15px;
+    margin-right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    border: 2px solid #ccc;
+}
+
+th, td {
+    border: 1px solid white;
+    padding: 5px;
+}
+
+th {
+    font-weight: bold;
+}

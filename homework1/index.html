@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+    <div class="form-group">
+        <label>Fullname_Customer</label>
+        <input type="text" id="name">
+    </div>
+    
+    <div class="form-group">
+        <label>Id_Pro</label>
+        <input type="text" id="id">
+    </div>
+    
+    <div class="form-group">
+        <label>Name_Pro</label>
+        <input type="text" id="prdname">
+    </div>
+    
+    <div class="form-group">
+        <label>Quantity_Pro</label>
+        <input type="text" id="qty">
+    </div>
+    
+    <div class="form-group">
+        <label>Price_Pro</label>
+        <input type="text" id="price">
+    </div>
+
+    <div class="actions">
+        <button onclick="save()">Save</button>
+        <button onclick="show()">Show</button>
+        <button onclick="reset()">Reset</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Auto_Increment</th>
+                <th>Fullname_Customer</th>
+                <th>Id_Pro</th>
+                <th>Name_Pro</th>
+                <th>Quantity_Pro</th>
+                <th>Price_Pro</th>
+                <th>Discount</th>
+                <th>Amount</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="tbl">
+            <!-- JavaScript will populate rows here -->
+        </tbody>
+    </table>
+
+    <script src="index.js"></script>
+    
+</body>
+</html>
