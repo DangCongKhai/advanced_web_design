@@ -1,15 +1,26 @@
 var arr = [];
 
 function save() {
-    var a = {
+
+    let a = {
         name: document.getElementById('name').value,
         id: document.getElementById('id').value,
         prdname: document.getElementById('prdname').value,
         qty: document.getElementById('qty').value,
         price: document.getElementById('price').value,
     }
-    console.log(a);
-    arr.push(a);
+    
+    // Find id of a in arr
+    let index = arr.findIndex(function(item) {
+        return item.id === a.id;
+    });
+
+    if (index !== -1) {
+        alert("ID already exists. Please enter a unique ID.");
+    } else {
+        // If id does not exist, add the new object to the array
+        arr.push(a);
+    }
     show();
 }
 
