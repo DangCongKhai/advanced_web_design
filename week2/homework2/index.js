@@ -6,8 +6,9 @@ const PI = 3.14159;
 if (true) { 
     let x = 10; 
     console.log(x); // 10 
+    
 } 
-console.log(x); // Lỗi: x is not defined (do 'let' có phạm vi khối)
+// console.log(x); // Lỗi: x is not defined (do 'let' có phạm vi khối)
 
 // 3. Arrow Functions: Cú pháp ngắn gọn hơn để viết các hàm (hàm mũi tên), không có 'this' riêng.
 const add = (a, b) => a + b; 
@@ -52,7 +53,6 @@ console.log(userAge); // 30
 export const greet = (name) => `Hello, ${name}!`;
 
 // main.js - Nhập (import) hàm từ file khác vào
-import { greet } from "./module.js"; 
 console.log(greet("Alice")); // "Hello, Alice!"
 
 // 10. Classes: Cú pháp hướng đối tượng (OOP) rõ ràng hơn, giúp khởi tạo đối tượng với constructor và các phương thức (methods).
@@ -101,9 +101,10 @@ console.log("Hello".startsWith("He")); // true (Kiểm tra chuỗi bắt đầu 
 console.log("Hello".endsWith("lo")); // true (Kiểm tra chuỗi kết thúc bằng từ khóa không)
 
 // 15. Promises: Đối tượng đại diện cho một tác vụ bất đồng bộ (hoàn thành hoặc thất bại) trong tương lai.
-const fetchData = () => { 
+const fetchData = (status) => { 
     return new Promise((resolve, reject) => { 
-        setTimeout(() => resolve("Data received"), 2000); 
+        setTimeout(() => status ? resolve("Data received") : reject("Error"), 2000); 
     }); 
 }; 
-fetchData().then(console.log); // "Data received" (sau 2 giây)
+fetchData(true).then(console.log).catch(console.error); // "Data received" (sau 2 giây)
+fetchData(false).then(console.log).catch(console.error); // "Error" (sau 2 giây)
