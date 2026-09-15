@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="app-container">
+        <!-- Add Product Section -->
+        <div class="add-product-section">
+            <h2>Add New Product</h2>
+            <form id="add-form" class="product-form">
+                <input type="text" id="add-name" placeholder="Product Name" required>
+                <input type="text" id="add-image" placeholder="Image URL" required>
+                <input type="text" id="add-description" placeholder="Description" required>
+                <input type="number" id="add-quantity" placeholder="Quantity" required>
+                <input type="number" id="add-price" placeholder="Price" step="0.01" required>
+                <button type="submit" id="add-btn">Add Product</button>
+            </form>
+        </div>
+
+        <!-- Bulk Delete Section -->
+        <div class="bulk-delete-section">
+            <button id="delete-btn" class="delete-btn" disabled>Delete 0 items</button>
+        </div>
+
+        <!-- Product List -->
+        <div class="product-list" id="product-list"></div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
