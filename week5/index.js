@@ -261,28 +261,26 @@ async function handleAddProduct(e) {
     isLoading = true;
     disableAllButtons();
 
-    try {
-        const addedProduct = await addNewProduct(newProduct);
-        
-        // Add to local products array
-        products.push(addedProduct);
-        
-        // Surgical add: append new product to DOM
-        const productList = document.getElementById("product-list");
-        const productElement = createProductElement(addedProduct);
-        productList.appendChild(productElement);
-        attachProductEventListeners(productElement, addedProduct);
+    addNewProduct(newProduct)
+        .then(addedProduct => {
+            products.push(addedProduct);
+            const productList = document.getElementById("product-list");
+            const productElement = createProductElement(addedProduct);
+            productList.appendChild(productElement);
+            attachProductEventListeners(productElement, addedProduct);
 
-        // Clear form
-        document.getElementById("add-form").reset();
-        alert("Product added successfully!");
-    } catch (error) {
-        console.error("Error adding product:", error);
-        alert("Failed to add product");
-    } finally {
-        isLoading = false;
-        enableAllButtons();
-    }
+            // Clear form
+            document.getElementById("add-form").reset();
+            alert("Product added successfully!");
+        })
+        .catch(error => {
+            console.error("Error adding product:", error);
+            alert("Failed to add product");
+        })
+        .finally(() => {
+            isLoading = false;
+            enableAllButtons();
+        })
 }
 
 // Disable all buttons during loading
