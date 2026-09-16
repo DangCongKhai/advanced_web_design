@@ -1,4 +1,4 @@
-const ENDPOINT = "https://6aa950f62d442cb69d49aba1.mockapi.io/tour"
+import TourDuLich from "./TourDuLich.js"
 
 let tours = []
 let deletedTourIds = []
@@ -35,84 +35,6 @@ function escapeHtml(value) {
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
-}
-
-class TourDuLich {
-    constructor({ id, name, description, start_date, end_date, price, image_url }) {
-        this.id = id
-        this.name = name
-        this.description = description
-        this.start_date = start_date
-        this.end_date = end_date
-        this.price = price
-        this.image_url = image_url
-    }
-
-    static fetchAll() {
-        return new Promise((resolve, reject) => {
-            fetch(ENDPOINT)
-                .then(response => response.json())
-                .then(data => resolve(data.map(item => new TourDuLich(item))))
-                .catch(error => reject(error))
-        })
-    }
-
-    static add(tourData) {
-        return new Promise((resolve, reject) => {
-            fetch(ENDPOINT, {
-                method: "POST",
-                body: JSON.stringify(tourData),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-                .then(response => response.json())
-                .then(data => {
-                    resolve(data)
-                })
-                .catch(error => reject(error))
-        })
-    }
-
-    update() {
-        return new Promise((resolve, reject) => {
-            fetch(`${ENDPOINT}/${this.id}`, {
-                method: "PUT",
-                body: JSON.stringify({
-                    name: this.name,
-                    description: this.description,
-                    start_date: this.start_date,
-                    end_date: this.end_date,
-                    price: this.price,
-                    image_url: this.image_url,
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-                .then(response => response.json())
-                .then(data => {
-                    Object.assign(this, data)
-                    const index = tours.findIndex(tour => tour.id === this.id)
-                    if (index !== -1) {
-                        tours[index] = this
-                    }
-                    resolve(this)
-                })
-                .catch(error => reject(error))
-        })
-    }
-
-    delete() {
-        return new Promise((resolve, reject) => {
-            fetch(`${ENDPOINT}/${this.id}`, {
-                method: "DELETE",
-            })
-                .then(response => response.json())
-                .then(data => resolve(data))
-                .catch(error => reject(error))
-        })
-    }
 }
 
 function createTourElement(tour, isEditing = false) {
@@ -236,6 +158,11 @@ function enterEditMode(element, tour) {
 
         tour.update()
             .then(updatedTour => {
+                const index = tours.findIndex(item => item.id === updatedTour.id)
+                if (index !== -1) {
+                    tours[index] = updatedTour
+                }
+
                 const updatedElement = createTourElement(updatedTour)
                 editElement.replaceWith(updatedElement)
                 attachTourEventListeners(updatedElement, updatedTour)
@@ -274,36 +201,41 @@ function handleBulkDelete() {
 
     const failedIds = []
     const idsToDelete = [...deletedTourIds]
+    const deletePromises = []
 
     idsToDelete.forEach(id => {
         const tour = tours.find(item => item.id === id)
         if (!tour) return
-        tour.delete()
-            .then(data => {
-                const element = document.querySelector(`[data-tour-id="${data.id}"]`)
+
+        const promise = tour.delete()
+            .then(deletedTour => {
+                const element = document.querySelector(`[data-tour-id="${deletedTour.id}"]`)
                 if (element) {
                     element.remove()
                 }
-                tours = tours.filter(item => item.id !== id)
+                tours = tours.filter(item => item.id !== deletedTour.id)
             })
             .catch(error => {
                 console.error(`Error deleting tour ${id}:`, error)
                 failedIds.push(id)
             })
-    });
-    
-    isLoading = false
-    enableAllButtons()
 
-    deletedTourIds = []
-    updateDeleteButton()
+        deletePromises.push(promise)
+    })
 
-    if (failedIds.length > 0) {
-        alert(`Failed to delete items: ${failedIds.join(", ")}`)
-    } else {
-        alert("All items deleted successfully!")
-    }
+    Promise.all(deletePromises)
+        .then(() => {
+            isLoading = false
+            enableAllButtons()
+            deletedTourIds = []
+            updateDeleteButton()
 
+            if (failedIds.length > 0) {
+                alert(`Failed to delete items: ${failedIds.join(", ")}`)
+            } else {
+                alert("All items deleted successfully!")
+            }
+        })
 }
 
 function handleAddTour(e) {
@@ -321,7 +253,7 @@ function handleAddTour(e) {
         return
     }
 
-    const newTour = {
+    const tourData = {
         name,
         image_url,
         description,
@@ -333,14 +265,13 @@ function handleAddTour(e) {
     isLoading = true
     disableAllButtons()
 
-    TourDuLich.add(newTour)
+    TourDuLich.add(tourData)
         .then(addedTour => {
-            const tour = new TourDuLich(addedTour)
-            tours.push(tour)
+            tours.push(addedTour)
             const tourList = document.getElementById("tour-list")
-            const tourElement = createTourElement(tour)
+            const tourElement = createTourElement(addedTour)
             tourList.appendChild(tourElement)
-            attachTourEventListeners(tourElement, tour)
+            attachTourEventListeners(tourElement, addedTour)
 
             document.getElementById("add-form").reset()
             alert("Tour added successfully!")
