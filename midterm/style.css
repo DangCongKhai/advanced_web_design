@@ -1,0 +1,292 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  padding: 20px;
+}
+
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.add-tour-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-tour-section h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.tour-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.tour-form input,
+.tour-form .date-field input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.tour-form input:focus,
+.edit-form input:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.tour-form button {
+  padding: 8px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tour-form button:hover {
+  background: #45a049;
+}
+
+.tour-form button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.bulk-delete-section {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-btn {
+  padding: 10px 20px;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.delete-btn:hover:not(:disabled) {
+  background: #da190b;
+}
+
+.delete-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.tour-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1200px) {
+  .tour-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .tour-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.tour-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.tour-item:hover {
+  transform: translateY(-5px);
+}
+
+.tour-item img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.tour-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 16px 16px 0;
+  background: #eef3f8;
+}
+
+.tour-id {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: #5b6b7c;
+}
+
+.tour-item h2 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: #123a6d;
+}
+
+.tour-description {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #7a8794;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tour-dates {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #5b6b7c;
+}
+
+.price {
+  margin: 0 0 12px;
+  color: #0b2d55;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.book-btn {
+  width: calc(100% + 32px);
+  margin: auto -16px 0;
+  padding: 12px 16px;
+  background: #f57c1f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.book-btn:hover {
+  background: #e36d12;
+}
+
+.book-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.card-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+}
+
+.delete-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.update-button {
+  padding: 6px 12px;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.update-button:hover {
+  background: #0b7dda;
+}
+
+.update-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.edit-form {
+  padding: 15px;
+  background: white;
+}
+
+.edit-form input,
+.edit-form .date-field {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.edit-form input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.edit-form-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-form-buttons button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.save-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #45a049;
+}
+
+.cancel-btn {
+  background: #999;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #888;
+}
