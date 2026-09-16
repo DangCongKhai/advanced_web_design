@@ -229,7 +229,7 @@ function handleBulkDelete() {
             enableAllButtons()
             deletedTourIds = []
             updateDeleteButton()
-
+            updateAvailableTours();
             if (failedIds.length > 0) {
                 alert(`Failed to delete items: ${failedIds.join(", ")}`)
             } else {
@@ -283,6 +283,7 @@ function handleAddTour(e) {
         .finally(() => {
             isLoading = false
             enableAllButtons()
+            updateAvailableTours()
         })
 }
 
@@ -300,11 +301,18 @@ function enableAllButtons() {
     document.querySelectorAll(".book-btn").forEach(btn => btn.disabled = false)
 }
 
+function updateAvailableTours() {
+    const availableTour = document.querySelector(".available-tour")
+    const numTours = tours.length
+    availableTour.textContent = `${numTours} tour(s)`
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     TourDuLich.fetchAll()
         .then(data => {
             tours = data
             renderTours()
+            updateAvailableTours()
         })
         .catch(error => {
             console.error("Error fetching tours:", error)
