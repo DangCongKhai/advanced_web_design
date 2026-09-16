@@ -137,7 +137,6 @@ function createTourElement(tour, isEditing = false) {
             </div>
             <img src="${escapeHtml(tour.image_url)}" alt="${escapeHtml(tour.name)}">
             <div class="tour-info">
-                <p class="tour-id">Tour ID ${escapeHtml(tour.id)}</p>
                 <h2>${escapeHtml(tour.name)}</h2>
                 <p class="tour-description">${escapeHtml(tour.description)}</p>
                 <p class="tour-dates">${formatDate(tour.start_date)} - ${formatDate(tour.end_date)}</p>

@@ -2,9 +2,34 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg: #f5f5f5;
+  --card: #fff;
+  --info-bg: #eef3f8;
+  --text: #333;
+  --title: #123a6d;
+  --muted: #5b6b7c;
+  --desc: #7a8794;
+  --price: #0b2d55;
+  --border: #ddd;
+  --green: #4caf50;
+  --green-hover: #45a049;
+  --red: #f44336;
+  --red-hover: #da190b;
+  --orange: #f57c1f;
+  --orange-hover: #e36d12;
+  --blue: #2196f3;
+  --blue-hover: #0b7dda;
+  --gray: #999;
+  --gray-hover: #888;
+  --disabled: #ccc;
+  --radius: 4px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 body {
   font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  background: var(--bg);
   padding: 20px;
 }
 
@@ -13,9 +38,13 @@ body {
   margin: 0 auto;
 }
 
-.add-tour-section {
-  background: white;
+.add-tour-section,
+.edit-form {
+  background: var(--card);
   padding: 20px;
+}
+
+.add-tour-section {
   border-radius: 8px;
   margin-bottom: 30px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -23,55 +52,82 @@ body {
 
 .add-tour-section h2 {
   margin-top: 0;
-  color: #333;
+  color: var(--text);
+}
+
+.tour-form,
+.edit-form-buttons,
+.card-actions,
+.tour-info,
+.tour-item,
+.date-field {
+  display: flex;
+}
+
+.tour-form,
+.edit-form-buttons,
+.card-actions {
+  gap: 10px;
 }
 
 .tour-form {
-  display: flex;
-  gap: 10px;
   flex-wrap: wrap;
   align-items: flex-end;
 }
 
 .tour-form input,
-.tour-form .date-field input {
+.edit-form input {
   padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   font-size: 14px;
 }
 
+.tour-form input:focus,
+.edit-form input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
 .date-field {
-  display: flex;
   flex-direction: column;
   gap: 4px;
   font-size: 12px;
   color: #666;
 }
 
-.tour-form input:focus,
-.edit-form input:focus {
-  outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+.tour-form button,
+.delete-btn,
+.update-button,
+.book-btn,
+.edit-form-buttons button {
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  border-radius: var(--radius);
 }
 
 .tour-form button {
   padding: 8px 20px;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
 }
 
-.tour-form button:hover {
-  background: #45a049;
+.tour-form button,
+.save-btn {
+  background: var(--green);
 }
 
-.tour-form button:disabled {
-  background: #ccc;
+.tour-form button:hover,
+.save-btn:hover {
+  background: var(--green-hover);
+}
+
+.tour-form button:disabled,
+.delete-btn:disabled,
+.update-button:disabled,
+.book-btn:disabled {
+  background: var(--disabled);
   cursor: not-allowed;
 }
 
@@ -83,21 +139,11 @@ body {
 
 .delete-btn {
   padding: 10px 20px;
-  background: #f44336;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
+  background: var(--red);
 }
 
 .delete-btn:hover:not(:disabled) {
-  background: #da190b;
-}
-
-.delete-btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
+  background: var(--red-hover);
 }
 
 .tour-list {
@@ -120,12 +166,11 @@ body {
 
 .tour-item {
   position: relative;
-  display: flex;
   flex-direction: column;
-  background: white;
+  background: var(--card);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
   transition: transform 0.2s;
 }
 
@@ -141,29 +186,36 @@ body {
 }
 
 .tour-info {
-  display: flex;
   flex-direction: column;
   flex: 1;
   padding: 16px 16px 0;
-  background: #eef3f8;
+  background: var(--info-bg);
+}
+
+.tour-id,
+.tour-dates,
+.tour-description {
+  margin: 0 0 8px;
+  font-size: 13px;
 }
 
 .tour-id {
-  margin: 0 0 4px;
-  font-size: 13px;
-  color: #5b6b7c;
+  margin-bottom: 4px;
+  color: var(--muted);
+}
+
+.tour-dates {
+  color: var(--muted);
 }
 
 .tour-item h2 {
   margin: 0 0 8px;
   font-size: 1.05rem;
-  color: #123a6d;
+  color: var(--title);
 }
 
 .tour-description {
-  margin: 0 0 8px;
-  font-size: 13px;
-  color: #7a8794;
+  color: var(--desc);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
@@ -171,15 +223,9 @@ body {
   overflow: hidden;
 }
 
-.tour-dates {
-  margin: 0 0 8px;
-  font-size: 13px;
-  color: #5b6b7c;
-}
-
 .price {
   margin: 0 0 12px;
-  color: #0b2d55;
+  color: var(--price);
   font-size: 1.2rem;
   font-weight: bold;
 }
@@ -188,28 +234,19 @@ body {
   width: calc(100% + 32px);
   margin: auto -16px 0;
   padding: 12px 16px;
-  background: #f57c1f;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
+  background: var(--orange);
+  border-radius: 0;
   font-size: 15px;
 }
 
-.book-btn:hover {
-  background: #e36d12;
-}
-
-.book-btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
+.book-btn:hover:not(:disabled) {
+  background: var(--orange-hover);
 }
 
 .card-actions {
   position: absolute;
   top: 10px;
   right: 10px;
-  display: flex;
   align-items: center;
   gap: 8px;
   z-index: 10;
@@ -223,26 +260,15 @@ body {
 
 .update-button {
   padding: 6px 12px;
-  background: #2196F3;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
+  background: var(--blue);
 }
 
-.update-button:hover {
-  background: #0b7dda;
-}
-
-.update-button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
+.update-button:hover:not(:disabled) {
+  background: var(--blue-hover);
 }
 
 .edit-form {
   padding: 15px;
-  background: white;
 }
 
 .edit-form input,
@@ -252,41 +278,15 @@ body {
   margin-bottom: 10px;
 }
 
-.edit-form input {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.edit-form-buttons {
-  display: flex;
-  gap: 10px;
-}
-
 .edit-form-buttons button {
   flex: 1;
   padding: 8px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.save-btn {
-  background: #4CAF50;
-  color: white;
-}
-
-.save-btn:hover {
-  background: #45a049;
 }
 
 .cancel-btn {
-  background: #999;
-  color: white;
+  background: var(--gray);
 }
 
 .cancel-btn:hover {
-  background: #888;
+  background: var(--gray-hover);
 }
