@@ -49,57 +49,69 @@ class TourDuLich {
     }
 
     static fetchAll() {
-        return fetch(ENDPOINT)
-            .then(response => response.json())
-            .then(data => data.map(item => new TourDuLich(item)))
+        return new Promise((resolve, reject) => {
+            fetch(ENDPOINT)
+                .then(response => response.json())
+                .then(data => resolve(data.map(item => new TourDuLich(item))))
+                .catch(error => reject(error))
+        })
     }
 
     static add(tourData) {
-        return fetch(ENDPOINT, {
-            method: "POST",
-            body: JSON.stringify(tourData),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                const tour = new TourDuLich(data)
-                tours.push(tour)
-                return tour
+        return new Promise((resolve, reject) => {
+            fetch(ENDPOINT, {
+                method: "POST",
+                body: JSON.stringify(tourData),
+                headers: {
+                    "Content-Type": "application/json",
+                },
             })
+                .then(response => response.json())
+                .then(data => {
+                    resolve(data)
+                })
+                .catch(error => reject(error))
+        })
     }
 
     update() {
-        return fetch(`${ENDPOINT}/${this.id}`, {
-            method: "PUT",
-            body: JSON.stringify({
-                name: this.name,
-                description: this.description,
-                start_date: this.start_date,
-                end_date: this.end_date,
-                price: this.price,
-                image_url: this.image_url,
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                Object.assign(this, data)
-                const index = tours.findIndex(tour => tour.id === this.id)
-                if (index !== -1) {
-                    tours[index] = this
-                }
-                return this
+        return new Promise((resolve, reject) => {
+            fetch(`${ENDPOINT}/${this.id}`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    name: this.name,
+                    description: this.description,
+                    start_date: this.start_date,
+                    end_date: this.end_date,
+                    price: this.price,
+                    image_url: this.image_url,
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
             })
+                .then(response => response.json())
+                .then(data => {
+                    Object.assign(this, data)
+                    const index = tours.findIndex(tour => tour.id === this.id)
+                    if (index !== -1) {
+                        tours[index] = this
+                    }
+                    resolve(this)
+                })
+                .catch(error => reject(error))
+        })
     }
 
     delete() {
-        return fetch(`${ENDPOINT}/${this.id}`, {
-            method: "DELETE",
-        }).then(response => response.json())
+        return new Promise((resolve, reject) => {
+            fetch(`${ENDPOINT}/${this.id}`, {
+                method: "DELETE",
+            })
+                .then(response => response.json())
+                .then(data => resolve(data))
+                .catch(error => reject(error))
+        })
     }
 }
 
@@ -251,7 +263,7 @@ function updateDeleteButton() {
     deleteBtn.disabled = count === 0
 }
 
-async function handleBulkDelete() {
+function handleBulkDelete() {
     if (deletedTourIds.length === 0) return
 
     const confirmed = confirm(`Are you sure you want to delete ${deletedTourIds.length} item(s)?`)
@@ -261,24 +273,25 @@ async function handleBulkDelete() {
     disableAllButtons()
 
     const failedIds = []
+    const idsToDelete = [...deletedTourIds]
 
-    for (const id of deletedTourIds) {
+    idsToDelete.forEach(id => {
         const tour = tours.find(item => item.id === id)
-        if (!tour) continue
-
-        try {
-            await tour.delete()
-            const element = document.querySelector(`[data-tour-id="${id}"]`)
-            if (element) {
-                element.remove()
-            }
-            tours = tours.filter(item => item.id !== id)
-        } catch (error) {
-            console.error(`Error deleting tour ${id}:`, error)
-            failedIds.push(id)
-        }
-    }
-
+        if (!tour) return
+        tour.delete()
+            .then(data => {
+                const element = document.querySelector(`[data-tour-id="${data.id}"]`)
+                if (element) {
+                    element.remove()
+                }
+                tours = tours.filter(item => item.id !== id)
+            })
+            .catch(error => {
+                console.error(`Error deleting tour ${id}:`, error)
+                failedIds.push(id)
+            })
+    });
+    
     isLoading = false
     enableAllButtons()
 
@@ -290,9 +303,10 @@ async function handleBulkDelete() {
     } else {
         alert("All items deleted successfully!")
     }
+
 }
 
-async function handleAddTour(e) {
+function handleAddTour(e) {
     e.preventDefault()
 
     const name = document.getElementById("add-name").value.trim()
@@ -321,10 +335,12 @@ async function handleAddTour(e) {
 
     TourDuLich.add(newTour)
         .then(addedTour => {
+            const tour = new TourDuLich(addedTour)
+            tours.push(tour)
             const tourList = document.getElementById("tour-list")
-            const tourElement = createTourElement(addedTour)
+            const tourElement = createTourElement(tour)
             tourList.appendChild(tourElement)
-            attachTourEventListeners(tourElement, addedTour)
+            attachTourEventListeners(tourElement, tour)
 
             document.getElementById("add-form").reset()
             alert("Tour added successfully!")
