@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+  <title>Danh sách sản phẩm</title>
+</head>
+<body>
+  <h1>Danh sách sản phẩm</h1>
+  <ul>
+    <% products.forEach(p => { %>
+      <li><%= p.id %> - <%= p.name %> - $<%= p.price %></li>
+    <% }) %>
+  </ul>
+</body>
+</html>
