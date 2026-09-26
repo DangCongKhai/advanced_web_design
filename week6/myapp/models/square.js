@@ -6,6 +6,6 @@ const squareSchema = new mongoose.Schema({
   area: { type: Number, required: true },
 });
 
-const Square = mongoose.model('Square', squareSchema);
+const Square = mongoose.model('Square', squareSchema, "square");
 
 module.exports = Square;

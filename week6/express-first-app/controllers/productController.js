@@ -1,20 +1,25 @@
-const products = [
-  { id: 1, name: 'Laptop- vnuk', price: 1500 },
-  { id: 2, name: 'Điện thoại', price: 800 },
-  { id: 3, name: 'Tai nghe', price: 100 }
-];
+const products = require('../models/productModel');
 
 
 exports.getProducts = (req, res) => {
-  res.render('products', { products });
+  res.render('products', { products: products.getAll() });
 };
 
 
 exports.getProductById = (req, res) => {
-  const product = products.find(p => p.id === parseInt(req.params.id));
-    if (product) {
-      res.send(`<h1>${product.name}</h1><p>Price: ${product.price}</p>`);
-    } else {
-      res.send("This product is not found!")
-  }
+  const product = products.getById(parseInt(req.params.id));
+  res.render('product', { product });
+};
+
+
+exports.addProduct = (req, res) => {
+  
+  const newProduct = {
+    id: products.getAll().length + 1,
+    name: req.body.name,
+    price: req.body.price,
+    image: req.body.image
+  };
+  products.add(newProduct);
+  res.redirect('/products');
 };

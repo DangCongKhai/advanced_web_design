@@ -22,7 +22,11 @@ mongoose.connect(MONGODB_URI)
 })
 
 
-app.use('/', squareRouter);
+app.use('/square', squareRouter);
+
+app.use('/', (req, res) => {
+    res.render('index', { perimeter: null, area: null })
+})
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`)
