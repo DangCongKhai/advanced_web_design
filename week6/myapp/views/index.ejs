@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World</title>
+</head>
+<body>
+  <main class="page">
+    <div class="square-container">
+      <form action="/" method="post">
+      <input type="number" name="side" placeholder="Enter the side of the square">
+      <button type="submit">Calculate</button>
+    </form>
+    <div class="square-result">
+   <% if (locals.perimeter && locals.area) { %>
+      <h1>Perimeter: <%= perimeter %></h1>
+      <h1>Area: <%= area %></h1>
+    <% } %>
+    </div>
+    </div>
+    
+  </main>
+</body>
+</html>
