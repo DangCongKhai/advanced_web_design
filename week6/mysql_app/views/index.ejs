@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+  </head>
+  <body>
+    <main class="page">
+      <div class="square-container">
+        <form action="/square" method="post">
+          <input type="number" name="side" placeholder="Enter the side of the square">
+          <button type="submit">Calculate</button>
+        </form>
+      </div>
+      <% if (locals.squareList && locals.squareList.length > 0) { %>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Side Length</th>
+            <th>Perimeter</th>
+            <th>Area</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% locals.squareList.forEach(function(square) { %>
+            <tr>
+              <td><%= square.sideLength %></td>
+              <td><%= square.perimeter %></td>
+              <td><%= square.area %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <% } %>
+    </main>
+  </body>
+</html>
