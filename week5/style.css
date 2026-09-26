@@ -144,11 +144,7 @@ body {
   color: #333;
 }
 
-.product-item p {
-  margin: 5px 0;
-  color: #666;
-  font-size: 0.9rem;
-}
+
 
 .price {
   color: #ff6b00;
@@ -156,8 +152,12 @@ body {
   font-weight: bold;
 }
 
+.product-item p {
+  margin: 5px 0;
+} 
+
 .quantity {
-  color: #4CAF50;
+  color: green;
   font-weight: bold;
 }
 
