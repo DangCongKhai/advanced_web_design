@@ -1,36 +1,67 @@
-<!DOCTYPE html>  																					
-<html lang="en">  																					
-<head>  																					
-    <meta charset="UTF-8">  																					
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="/css/products.css">
+</head>
+<body>
+    <main class="page">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Catalog</p>
+                <h1>Products</h1>
+            </div>
+            <a class="btn btn-primary" href="/api/products/add">Add product</a>
+        </header>
 
-<title>Product List</title>  																					
-</head>  																					
-<body>  																					
-    <h1>Product List</h1>  																					
-    <a href="/api/products/add">Add New Product</a>  																					
-    <table border="1">  																					
-        <tr>  																					
-            <th>ID</th>  																					
-            <th>Name</th>  																					
-            <th>Price</th>  																					
-            <th>Description</th>  																					
-            <th>Actions</th>  																					
-        </tr>  																					
-        <% products.forEach(product => { %>  																					
-        <tr>  																					
-            <td><%= product.id %></td>  																					
-            <td><%= product.name %></td>  																					
-            <td><%= product.price %></td>  																					
-            <td><%= product.description %></td>  																					
-            <td>  																					
-                <a href="/api/products/edit/<%= product.id %>">Edit</a>  																					
-                <form action="/api/products/delete/<%= product.id %>" method="POST" style="display:inline;">  																					
-                    <button type="submit">Delete</button>  																					
-                </form>  																					
-            </td>  																					
-        </tr>  																					
-        <% }); %>  																					
-    </table>  																					
-</body>  																					
-</html>  
+        <section class="card">
+            <% if (!products.length) { %>
+                <p class="empty-state">No products yet. Add one to get started.</p>
+            <% } else { %>
+                <div class="table-wrap">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% products.forEach(product => { %>
+                            <tr>
+                                <td>
+                                    <% if (product.image) { %>
+                                        <img class="thumb" src="<%= product.image %>" alt="<%= product.name %>">
+                                    <% } else { %>
+                                        <span class="thumb thumb-empty">No image</span>
+                                    <% } %>
+                                </td>
+                                <td><%= product.id %></td>
+                                <td><%= product.name %></td>
+                                <td>$<%= product.price %></td>
+                                <td><%= product.description %></td>
+                                <td class="actions">
+                                    <div class="actions-row">
+                                        <a class="btn btn-ghost" href="/api/products/edit/<%= product.id %>">Edit</a>
+                                        <form action="/api/products/delete/<%= product.id %>" method="POST">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } %>
+        </section>
+    </main>
+</body>
+</html>

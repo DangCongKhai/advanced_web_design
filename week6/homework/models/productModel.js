@@ -1,4 +1,3 @@
-const { getProductById } = require("../../express-first-app/controllers/productController");
 const db = require("../config/database");
 
 const Product = {

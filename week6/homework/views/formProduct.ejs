@@ -4,45 +4,69 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= product.id ? 'Edit Product' : 'Add Product' %></title>
+    <link rel="stylesheet" href="/css/formProduct.css" />
   </head>
   <body>
-    <h1><%= product.id ? 'Edit Product' : 'Add New Product' %></h1>
-    <form
-      action="<%= product.id ? '/api/products/edit/' + product.id : '/api/products' %>"
-      method="POST"
-    >
-      <label for="name">Name:</label><br />
-      <input
-        type="text"
-        id="name"
-        name="name"
-        value="<%= product.name || '' %>"
-        required
-      /><br /><br />
+    <main class="page">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow"><%= product.id ? 'Update' : 'Create' %></p>
+          <h1><%= product.id ? 'Edit product' : 'Add product' %></h1>
+        </div>
+        <a class="btn btn-ghost" href="/api/products">Back to list</a>
+      </header>
 
-      <label for="price">Price:</label><br />
-      <input
-        type="number"
-        id="price"
-        name="price"
-        value="<%= product.price || '' %>"
-        required
-      /><br /><br />
+      <section class="card">
+        <form
+          class="product-form"
+          action="<%= product.id ? '/api/products/edit/' + product.id : '/api/products' %>"
+          method="POST"
+        >
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value="<%= product.name || '' %>"
+            placeholder="Laptop"
+            required
+          />
 
-      <label for="description">Description:</label><br />
-      <input
-        type="text"
-        id="description"
-        name="description"
-        value="<%= product.description || '' %>"
-      /><br /><br />
+          <label for="price">Price</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            value="<%= product.price || '' %>"
+            placeholder="1500"
+            min="0"
+            step="0.01"
+            required
+          />
 
-      <input
-        type="submit"
-        value="<%= product.id ? 'Update Product' : 'Add Product' %>"
-      />
-    </form>
-    <br />
-    <a href="/api/products">Back to Product List</a>
+          <label for="description">Description</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            value="<%= product.description || '' %>"
+            placeholder="Short description"
+          />
+
+          <label for="image">Image URL</label>
+          <input
+            type="url"
+            id="image"
+            name="image"
+            value="<%= product.image || '' %>"
+            placeholder="https://example.com/photo.jpg"
+          />
+
+          <button class="btn btn-primary" type="submit">
+            <%= product.id ? 'Update product' : 'Add product' %>
+          </button>
+        </form>
+      </section>
+    </main>
   </body>
 </html>

@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.page {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background: #1b89a7;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #0e6076;
+}
+
+.btn-ghost {
+  background: #eef2ff;
+  color: #1d4ed8;
+}
+
+.product-form {
+  display: grid;
+  gap: 8px;
+}
+
+.product-form label {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #374151;
+}
+
+.product-form input[type="text"],
+.product-form input[type="number"],
+.product-form input[type="url"] {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.product-form input:focus {
+  outline: none;
+  border-color: #1b89a7;
+  box-shadow: 0 0 0 3px rgba(27, 137, 167, 0.15);
+}
+
+.product-form .btn {
+  margin-top: 16px;
+  justify-self: start;
+}
